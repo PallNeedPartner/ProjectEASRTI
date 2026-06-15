@@ -10,19 +10,16 @@ from flask import Flask, render_template, request, redirect
 app = Flask(__name__)
 
 
-# ── Guard: pastiin semua model ada sebelum app jalan ─────────────
+# ── Auto-download model kalau belum ada ──────────────────────────
 REQUIRED_FILES = [
     "model/fake_news_model.pkl",
     "model/tfidf_vectorizer.pkl",
     "model/nlm_classifier.pkl",
     "model/word2vec.pkl",
 ]
-for f in REQUIRED_FILES:
-    if not os.path.exists(f):
-        sys.exit(
-            f"❌ File tidak ditemukan: {f}\n"
-            f"   Jalankan train_model.py dan train_nlm.py dulu."
-        )
+if not all(os.path.exists(f) for f in REQUIRED_FILES):
+    print("⬇️  Model tidak ditemukan, downloading dari Google Drive...")
+    import download_models
 
 
 # ── Load kedua model ──────────────────────────────────────────────
