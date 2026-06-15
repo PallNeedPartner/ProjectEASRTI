@@ -1,0 +1,43 @@
+body{
+    background:#f5f7fb;
+}
+
+.hero{
+    padding:50px 0;
+}
+
+.result-card{
+    border-radius:15px;
+    box-shadow:0 4px 12px rgba(0,0,0,.1);
+}
+
+.card{
+    border:none;
+    border-radius:15px;
+}
+
+.navbar-brand{
+    font-weight:bold;
+}
+.table{
+    vertical-align: middle;
+}
+
+.badge{
+    font-size: 0.85rem;
+}
+
+.modal-body{
+    max-height:500px;
+    overflow-y:auto;
+}
+
+.card{
+    border:none;
+    border-radius:15px;
+}
+
+.card:hover{
+    transform:translateY(-2px);
+    transition:.3s;
+}

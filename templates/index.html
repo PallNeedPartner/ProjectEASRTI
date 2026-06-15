@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FakeShield AI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="/">FakeShield AI</a>
+        <div>
+            <a href="/" class="btn btn-outline-light btn-sm">Home</a>
+            <a href="/history" class="btn btn-outline-light btn-sm">History</a>
+            <a href="/dashboard" class="btn btn-warning btn-sm">Dashboard</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+
+    <div class="hero text-center">
+        <h1 class="display-4">FakeShield AI</h1>
+        <p class="lead">Web-Based Fake News Detection Using NLP & NLM</p>
+    </div>
+
+    <div class="card shadow p-4">
+
+        <h3 class="mb-3">Analyze News</h3>
+
+        <form action="/predict" method="post">
+
+            <textarea
+                name="news"
+                class="form-control mb-3"
+                rows="8"
+                placeholder="Paste berita di sini..."
+                required></textarea>
+
+            <!-- Toggle Model NLP vs NLM -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Pilih Model Deteksi:</label>
+                <div class="d-flex gap-3">
+
+                    <div class="form-check">
+                        <input
+                            class="form-check-input"
+                            type="radio"
+                            name="model_mode"
+                            id="modelTfidf"
+                            value="tfidf"
+                            checked>
+                        <label class="form-check-label" for="modelTfidf">
+                            <span class="badge bg-primary me-1">NLP</span>
+                            TF-IDF + Logistic Regression
+                            <small class="text-muted d-block">Cepat, berbasis frekuensi kata</small>
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input
+                            class="form-check-input"
+                            type="radio"
+                            name="model_mode"
+                            id="modelNlm"
+                            value="nlm">
+                        <label class="form-check-label" for="modelNlm">
+                            <span class="badge bg-purple me-1" style="background:#6f42c1">NLM</span>
+                            Word2Vec + Logistic Regression
+                            <small class="text-muted d-block">Semantik, nangkep makna kata</small>
+                        </label>
+                    </div>
+
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">
+                Deteksi Berita
+            </button>
+
+        </form>
+
+    </div>
+
+    {% if result %}
+
+    <div class="card result-card mt-4">
+        <div class="card-body text-center">
+
+            <h2 class="{{ 'text-success' if result == 'REAL NEWS' else 'text-danger' }}">
+                {{ result }}
+            </h2>
+
+            <h4>Confidence: {{ confidence }}%</h4>
+
+            <span class="badge bg-secondary mt-1">
+                Model: {{ model_used }}
+            </span>
+
+        </div>
+    </div>
+
+    {% endif %}
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
